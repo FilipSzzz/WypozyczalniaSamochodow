@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 @Service
 public class RentalService {
-    private RentalStorage rentalStorage;
-    private CarStorage carStorage;
+    private final RentalStorage rentalStorage;
+    private final CarStorage carStorage;
 
     public RentalService(RentalStorage rentalStorage, CarStorage carStorage){
         this.rentalStorage = rentalStorage;

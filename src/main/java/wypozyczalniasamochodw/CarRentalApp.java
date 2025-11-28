@@ -17,8 +17,6 @@ public class CarRentalApp {
         RentalStorage rentalStorage = context.getBean(RentalStorage.class);
 
 
-        // WYPISANIE DOSTEPNYCH SAMOCHODOW
-
         System.out.println("Dostepne samochody:");
         for(Car car : carStorage.getAllCars()){
             System.out.println("  - " + car);
@@ -27,6 +25,12 @@ public class CarRentalApp {
         System.out.println("TEST WYPOZYCZANIA SAMOCHODOW");
 
         rentalService.wypozyczenie("Ferrari Roma", LocalDate.now().plusDays(10), LocalDate.now().plusDays(13), 1);
-        rentalService.wypozyczenie("Ferrari Rom", LocalDate.now().plusDays(10), LocalDate.now().plusDays(13), 1);
+        if (rentalService.dostepnosc(2222, LocalDate.now().plusDays(3), LocalDate.now().plusDays(9))){
+            System.out.println("Samochod dostepny w wybranym terminie");
+        } else {
+            System.out.println("Samochod niedostepny w wybranym terminie");
+        }
+        System.out.println(rentalStorage.getRentals());
+
     }
 }
