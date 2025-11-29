@@ -4,11 +4,17 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CarStorage {
     private ArrayList<Car> cars = new ArrayList<>();
-
+/*
+* UWAGA TA KLASE UWAZAMY ZA "BAZE DANYCH" CZY MAAJ TUTAJ BYC METODY KTORE TYLKO
+* SA ODPOWIEDZIALNE ZA BAZE DANYCH, WYSZUKIWANIE SAMOCHODU
+*
+* */
     public CarStorage(){
         initializeCars();
     }
@@ -23,13 +29,13 @@ public class CarStorage {
     public ArrayList<Car> getAllCars(){
         return cars;
     }
-    public Car getCarByVin(int vin){
+    public boolean getCarByVin(int vin){
         for(Car car : cars){
             if(car.getVin() == vin){
-                return car;
+                return true;
             }
         }
-        return null;
+        return false;
     }
     public boolean isCarExist(String model){
         for(Car car : cars){
@@ -43,10 +49,12 @@ public class CarStorage {
         cars.add(car);
     }
 
-    public Car getCarByModel(String model){
-        for(Car car : cars){
+    public List<Car> getCarByModel(String model){ // trzeba to robic bo moga byc np DWA PASSATY
+        ArrayList<Car> carModelFor = new ArrayList<>();
+        for (Car car: cars){
             if(car.getModel().equals(model)){
-                return car;
+                carModelFor.add(car);
+                return carModelFor;
             }
         }
         return null;
