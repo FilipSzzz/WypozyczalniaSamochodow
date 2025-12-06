@@ -1,33 +1,42 @@
 package wypozyczalniasamochodw;
 
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 
-
+/*
+tutaj jest do zaimplementowania logika wypozyczenia samochodow:
+- wypozyczenie ( sprawdzenie dostepnosci, sprawdzenie czy nie bedzie przypadku nalozenia dat na siebie PATRZ ZDJECIE,
+- sprawdzenie dostepnosci po modelu, dacie od i do,
+- sprawdzenie czy nie wystepuje przypadek nalozenia dat na siebie
+ */
 @Service
 public class RentalService {
     private final RentalStorage rentalStorage;
     private final CarStorage carStorage;
 
-    public RentalService(RentalStorage rentalStorage, CarStorage carStorage){
+    public RentalService(RentalStorage rentalStorage, CarStorage carStorage) {
         this.rentalStorage = rentalStorage;
         this.carStorage = carStorage;
     }
 
-    public void wypozyczenie(String model, LocalDate dateFrom, LocalDate dateTo, int clientId){
-        Car car = this.carStorage.getCarByModel(model);
+    public void wypozyczenie(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
 
-        if (car != null && dostepnosc(car.getVin(), dateFrom, dateTo)){
-            Rental rental = new Rental(dateFrom, dateTo, clientId, car.getVin());
-            rentalStorage.addRental(rental);
-            System.out.println("Samochod wypozyczony pomyslnie: " + rental);
-        } else {
-            System.out.println("Samochod niedostepny w wybranym terminie");
-        }
     }
 
-    public boolean dostepnosc(int vin, LocalDate dateFrom, LocalDate dateTo) {
-        return rentalStorage.isAvailable(vin, dateFrom, dateTo);
+    public boolean dostepnosc(String model, LocalDate dateFrom, LocalDate dateTo) {
+        if (carStorage.getCarByModel(model) == null) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public boolean isModelAvailableInDate(int vin, LocalDate dateFrom, LocalDate dateTo) {
+        if (carStorage.getCarByVin(vin)) {
+            return false;
+        }
+        return true;
     }
 }
-

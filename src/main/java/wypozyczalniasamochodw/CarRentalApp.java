@@ -7,30 +7,22 @@ import org.springframework.context.ApplicationContext;
 import java.time.LocalDate;
 
 @SpringBootApplication
-public class CarRentalApp {
+public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tutaj jest dobrze
+
+    private final RentalService rentalService;
+
+    public CarRentalApp(RentalService rentalService){
+        this.rentalService = rentalService;
+
+        rentalService.wypozyczenie("Ferrari Roma ",
+                LocalDate.now().plusDays(10),
+                LocalDate.now().plusDays(15),1);
+
+    }
 
     public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(CarRentalApp.class, args);
 
-        RentalService rentalService = context.getBean(RentalService.class);
-        CarStorage carStorage = context.getBean(CarStorage.class);
-        RentalStorage rentalStorage = context.getBean(RentalStorage.class);
-
-
-        System.out.println("Dostepne samochody:");
-        for(Car car : carStorage.getAllCars()){
-            System.out.println("  - " + car);
-        }
-
-        System.out.println("TEST WYPOZYCZANIA SAMOCHODOW");
-
-        rentalService.wypozyczenie("Ferrari Roma", LocalDate.now().plusDays(10), LocalDate.now().plusDays(13), 1);
-        if (rentalService.dostepnosc(2222, LocalDate.now().plusDays(3), LocalDate.now().plusDays(9))){
-            System.out.println("Samochod dostepny w wybranym terminie");
-        } else {
-            System.out.println("Samochod niedostepny w wybranym terminie");
-        }
-        System.out.println(rentalStorage.getRentals());
+        SpringApplication.run(CarRentalApp.class, args);
 
     }
 }

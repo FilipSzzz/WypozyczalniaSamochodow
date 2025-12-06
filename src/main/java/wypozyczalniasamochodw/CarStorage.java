@@ -4,15 +4,23 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CarStorage {
     private ArrayList<Car> cars = new ArrayList<>();
 
-    public CarStorage(){
+    /*
+     * UWAGA TA KLASE UWAZAMY ZA "BAZE DANYCH" CZY MAAJ TUTAJ BYC METODY KTORE TYLKO
+     * SA ODPOWIEDZIALNE ZA BAZE DANYCH, WYSZUKIWANIE SAMOCHODU
+     *
+     * */
+    public CarStorage() {
         initializeCars();
     }
-    public void initializeCars(){
+
+    public void initializeCars() {
         cars.add(new Car("Passat w gazie", CarClass.Economy, 1234));
         cars.add(new Car("Ferrari Roma", CarClass.Premium, 2222));
         cars.add(new Car("LandRover Velar", CarClass.Premium, 4444));
@@ -20,33 +28,34 @@ public class CarStorage {
         cars.add(new Car("Mercedes S CLASS", CarClass.Bussiness, 6666));
         cars.add(new Car("Audi Q7", CarClass.SUV, 7777));
     }
-    public ArrayList<Car> getAllCars(){
+
+    public ArrayList<Car> getAllCars() {
         return cars;
     }
-    public Car getCarByVin(int vin){
-        for(Car car : cars){
-            if(car.getVin() == vin){
-                return car;
-            }
-        }
-        return null;
-    }
-    public boolean isCarExist(String model){
-        for(Car car : cars){
-            if(car.getModel().equals(model)){
+
+    public boolean getCarByVin(int vin) { // TUTAJ JEST CHYBA ZAIMPLEMENTOWANE DOBRZE, BO SAMOCHOD PO VINIE JEST UNIKALNY
+        for (Car car : cars) {
+            if (car.getVin() == vin) {
                 return true;
             }
         }
         return false;
     }
-    public void addCar(Car car){
+
+    public void addCar(Car car) {
+        if (getCarByVin(car.getVin())) {
+            System.out.println("Samochod o podanym VIN juz istnieje w bazie danych.");
+            return;
+        }
         cars.add(car);
     }
 
-    public Car getCarByModel(String model){
-        for(Car car : cars){
-            if(car.getModel().equals(model)){
-                return car;
+    public List<Car> getCarByModel(String model) { // trzeba to robic bo moga byc np DWA PASSATY
+        ArrayList<Car> carModelFor = new ArrayList<>();
+        for (Car car : cars) {
+            if (car.getModel().equals(model)) {
+                carModelFor.add(car);
+                return carModelFor;
             }
         }
         return null;
