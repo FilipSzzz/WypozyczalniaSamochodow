@@ -10,15 +10,17 @@ import java.util.Optional;
 @Component
 public class CarStorage {
     private ArrayList<Car> cars = new ArrayList<>();
-/*
-* UWAGA TA KLASE UWAZAMY ZA "BAZE DANYCH" CZY MAAJ TUTAJ BYC METODY KTORE TYLKO
-* SA ODPOWIEDZIALNE ZA BAZE DANYCH, WYSZUKIWANIE SAMOCHODU
-*
-* */
-    public CarStorage(){
+
+    /*
+     * UWAGA TA KLASE UWAZAMY ZA "BAZE DANYCH" CZY MAAJ TUTAJ BYC METODY KTORE TYLKO
+     * SA ODPOWIEDZIALNE ZA BAZE DANYCH, WYSZUKIWANIE SAMOCHODU
+     *
+     * */
+    public CarStorage() {
         initializeCars();
     }
-    public void initializeCars(){
+
+    public void initializeCars() {
         cars.add(new Car("Passat w gazie", CarClass.Economy, 1234));
         cars.add(new Car("Ferrari Roma", CarClass.Premium, 2222));
         cars.add(new Car("LandRover Velar", CarClass.Premium, 4444));
@@ -26,33 +28,32 @@ public class CarStorage {
         cars.add(new Car("Mercedes S CLASS", CarClass.Bussiness, 6666));
         cars.add(new Car("Audi Q7", CarClass.SUV, 7777));
     }
-    public ArrayList<Car> getAllCars(){
+
+    public ArrayList<Car> getAllCars() {
         return cars;
     }
-    public boolean getCarByVin(int vin){
-        for(Car car : cars){
-            if(car.getVin() == vin){
+
+    public boolean getCarByVin(int vin) { // TUTAJ JEST CHYBA ZAIMPLEMENTOWANE DOBRZE, BO SAMOCHOD PO VINIE JEST UNIKALNY
+        for (Car car : cars) {
+            if (car.getVin() == vin) {
                 return true;
             }
         }
         return false;
     }
-    public boolean isCarExist(String model){
-        for(Car car : cars){
-            if(car.getModel().equals(model)){
-                return true;
-            }
+
+    public void addCar(Car car) {
+        if (getCarByVin(car.getVin())) {
+            System.out.println("Samochod o podanym VIN juz istnieje w bazie danych.");
+            return;
         }
-        return false;
-    }
-    public void addCar(Car car){
         cars.add(car);
     }
 
-    public List<Car> getCarByModel(String model){ // trzeba to robic bo moga byc np DWA PASSATY
+    public List<Car> getCarByModel(String model) { // trzeba to robic bo moga byc np DWA PASSATY
         ArrayList<Car> carModelFor = new ArrayList<>();
-        for (Car car: cars){
-            if(car.getModel().equals(model)){
+        for (Car car : cars) {
+            if (car.getModel().equals(model)) {
                 carModelFor.add(car);
                 return carModelFor;
             }
