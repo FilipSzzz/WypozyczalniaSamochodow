@@ -6,12 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-DO ZAIMPLEMENTOWANIA:
-- DODANIE DO RENTALA,
-- getRentalsByClientID,
--
- */
 @Component
 public class RentalStorage {
     private ArrayList<Rental> rentals = new ArrayList<>();
@@ -23,9 +17,9 @@ public class RentalStorage {
     }
 
     public void addRental(Rental rental) {
-        {
-        }
+        rentals.add(rental);
     }
+
 
     public ArrayList<Rental> getRentals() {
         return rentals;

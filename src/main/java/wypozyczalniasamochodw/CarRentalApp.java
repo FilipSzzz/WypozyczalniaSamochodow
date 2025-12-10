@@ -2,7 +2,6 @@ package wypozyczalniasamochodw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 import java.time.LocalDate;
 
@@ -14,7 +13,7 @@ public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tu
     public CarRentalApp(RentalService rentalService){
         this.rentalService = rentalService;
 
-        rentalService.wypozyczenie("Ferrari Roma ",
+        rentalService.rentalMethod("Ferrari Roma",
                 LocalDate.now().plusDays(10),
                 LocalDate.now().plusDays(15),1);
 

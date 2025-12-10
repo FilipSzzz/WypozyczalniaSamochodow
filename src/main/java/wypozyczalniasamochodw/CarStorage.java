@@ -12,7 +12,7 @@ public class CarStorage {
     private ArrayList<Car> cars = new ArrayList<>();
 
     /*
-     * UWAGA TA KLASE UWAZAMY ZA "BAZE DANYCH" CZY MAAJ TUTAJ BYC METODY KTORE TYLKO
+     * UWAGA TA KLASE UWAZAMY ZA "BAZE DANYCH" CZY MAJA TUTAJ BYC METODY KTORE TYLKO
      * SA ODPOWIEDZIALNE ZA BAZE DANYCH, WYSZUKIWANIE SAMOCHODU
      *
      * */
@@ -52,13 +52,13 @@ public class CarStorage {
 
     public List<Car> getCarByModel(String model) { // trzeba to robic bo moga byc np DWA PASSATY
         ArrayList<Car> carModelFor = new ArrayList<>();
+        String trimmedModel = model.trim();
         for (Car car : cars) {
-            if (car.getModel().equals(model)) {
+            if (car.getModel().equalsIgnoreCase(trimmedModel)) {
                 carModelFor.add(car);
-                return carModelFor;
             }
         }
-        return null;
+        return carModelFor;
     }
 
 }

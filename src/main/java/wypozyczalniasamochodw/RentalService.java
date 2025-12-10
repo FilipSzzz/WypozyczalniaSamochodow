@@ -4,12 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-/*
-tutaj jest do zaimplementowania logika wypozyczenia samochodow:
-- wypozyczenie ( sprawdzenie dostepnosci, sprawdzenie czy nie bedzie przypadku nalozenia dat na siebie PATRZ ZDJECIE,
-- sprawdzenie dostepnosci po modelu, dacie od i do,
-- sprawdzenie czy nie wystepuje przypadek nalozenia dat na siebie
- */
 @Service
 public class RentalService {
     private final RentalStorage rentalStorage;
@@ -20,22 +14,51 @@ public class RentalService {
         this.carStorage = carStorage;
     }
 
-    public void wypozyczenie(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
-
+    public void rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
+        if (isAvailable(model,dateFrom,dateTo)){
+            rentalStorage.addRental(new Rental(dateFrom,dateTo,clientId,carStorage.getCarByModel(model).get(0).getVin()));
+        }
+        System.out.println("Wypozyczenie nie jest mozliwe");
     }
 
-    public boolean dostepnosc(String model, LocalDate dateFrom, LocalDate dateTo) {
-        if (carStorage.getCarByModel(model) == null) {
-            return false;
+    public boolean isAvailable(String model, LocalDate dateFrom, LocalDate dateTo) {
+        for (Car carToRent : carStorage.getCarByModel(model)) {
+            if (isModelAvailableInDate(carToRent.getVin(), dateFrom, dateTo)) {
+                return true;
+            }
         }
-
-        return true;
-
+        return false;
     }
 
     public boolean isModelAvailableInDate(int vin, LocalDate dateFrom, LocalDate dateTo) {
-        if (carStorage.getCarByVin(vin)) {
+        if (!carStorage.getCarByVin(vin)) {
+            System.out.println("Nie ma takiego samochodu w bazie danych.");
             return false;
+        }
+        if (dateFrom == null || dateTo == null) {
+            System.out.println("Podane dateFrom lub dateTo nie moze byc null.");
+            return false;
+        }
+        if (dateFrom.isAfter(dateTo)) {
+            System.out.println("DataOd nie moze byc po DataDo lub po dniu dzisiejszym.");
+            return false;
+        }
+        if (dateFrom.isEqual(dateTo)) {
+            System.out.println("Nie mozna wypozyczyc samochodu na jeden dzien.");
+            return false;
+        }
+        for (Rental existingRental: rentalStorage.getRentals()) { // iterujemy po wszystkich wypozyczeniach, szukajac nalozenia sie
+            if (existingRental.getCarVin() == vin){ // jezeli odnajdziemy wypozyczenie na samochod zgodny z podanym VINem
+                LocalDate existingStart = existingRental.getOdData(); // zapisuje istniejace wypozyczenie
+                LocalDate existingEnd = existingRental.getDoData();
+
+                if (existingStart.isBefore(dateTo) && existingEnd.isAfter(dateFrom)){ // przypadek nalozenia sie
+                    return false;
+                }
+
+
+
+            }
         }
         return true;
     }
