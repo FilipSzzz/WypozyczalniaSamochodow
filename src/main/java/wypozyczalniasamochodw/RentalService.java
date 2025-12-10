@@ -52,12 +52,9 @@ public class RentalService {
                 LocalDate existingStart = existingRental.getOdData(); // zapisuje istniejace wypozyczenie
                 LocalDate existingEnd = existingRental.getDoData();
 
-                if (existingStart.isBefore(dateTo) && existingEnd.isAfter(dateFrom)){ // przypadek nalozenia sie
+                if (!dateTo.isBefore(existingStart) && !dateFrom.isAfter(existingEnd)){ // przypadek nalozenia sie
                     return false;
                 }
-
-
-
             }
         }
         return true;
