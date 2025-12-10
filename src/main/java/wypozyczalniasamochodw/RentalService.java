@@ -15,10 +15,17 @@ public class RentalService {
     }
 
     public void rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
-        if (isAvailable(model,dateFrom,dateTo)){
-            rentalStorage.addRental(new Rental(dateFrom,dateTo,clientId,carStorage.getCarByModel(model).get(0).getVin()));
+        if (!isAvailable(model, dateFrom, dateTo)) {
+            System.out.println("Nie ma dostepnego modelu w podanym terminie");
         }
-        System.out.println("Wypozyczenie nie jest mozliwe");
+        for (Car car : carStorage.getCarByModel(model)) {
+            if (isModelAvailableInDate(car.getVin(), dateFrom, dateTo)) {
+                Rental rental = new Rental(dateFrom, dateTo, clientId, car.getVin());
+                rentalStorage.addRental(rental);
+                System.out.println("Wypozyczono samochod: " + model + " (VIN: " + car.getVin() + ")");
+                return;
+            }
+        }
     }
 
     public boolean isAvailable(String model, LocalDate dateFrom, LocalDate dateTo) {
