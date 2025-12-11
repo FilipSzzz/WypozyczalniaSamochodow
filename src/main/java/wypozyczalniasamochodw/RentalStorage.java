@@ -29,7 +29,7 @@ public class RentalStorage {
     }
     public List<Rental> getRentalsByClientId(int clientId) {
         return rentals.stream()
-                .filter(rental -> rental.getKlient_id() == clientId)
+                .filter(rental -> rental.getKlientId() == clientId)
                 .toList();
     }
 

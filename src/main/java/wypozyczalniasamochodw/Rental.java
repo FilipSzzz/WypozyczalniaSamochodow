@@ -6,17 +6,17 @@ public class Rental {
 
     private LocalDate odData;
     private LocalDate doData;
-    private int klient_id;
+    private int klientId;
     private int carVin;
 
-    public Rental(LocalDate odData, LocalDate doData, int klient_id, int carVin) {
+    public Rental(LocalDate odData, LocalDate doData, int klientId, int carVin) {
         this.odData = odData;
         this.doData = doData;
-        this.klient_id = klient_id;
+        this.klientId = klientId;
         this.carVin = carVin;
     }
-    public int getKlient_id(){
-        return klient_id;
+    public int getKlientId(){
+        return klientId;
     }
     public LocalDate getDoData(){
         return doData;
@@ -32,7 +32,7 @@ public class Rental {
         return "Rental{" +
                 "odData=" + odData +
                 ", doData=" + doData +
-                ", klient_id=" + klient_id +
+                ", klient_id=" + klientId +
                 ", carVin=" + carVin +
                 '}';
     }
