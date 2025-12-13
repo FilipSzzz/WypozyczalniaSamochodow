@@ -2,10 +2,8 @@ package wypozyczalniasamochodw;
 
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CarStorage {
@@ -33,7 +31,7 @@ public class CarStorage {
         return cars;
     }
 
-    public boolean getCarByVin(int vin) { // TUTAJ JEST CHYBA ZAIMPLEMENTOWANE DOBRZE, BO SAMOCHOD PO VINIE JEST UNIKALNY
+    public boolean existByVin(int vin) { // TUTAJ JEST CHYBA ZAIMPLEMENTOWANE DOBRZE, BO SAMOCHOD PO VINIE JEST UNIKALNY
         for (Car car : cars) {
             if (car.getVin() == vin) {
                 return true;
@@ -41,9 +39,16 @@ public class CarStorage {
         }
         return false;
     }
-
+    public Car getCarByVin(int vin) {
+        for (Car car : cars) {
+            if (car.getVin() == vin) {
+                return car;
+            }
+        }
+        return null;
+    }
     public void addCar(Car car) {
-        if (getCarByVin(car.getVin())) {
+        if (existByVin(car.getVin())) {
             System.out.println("Samochod o podanym VIN juz istnieje w bazie danych.");
             return;
         }

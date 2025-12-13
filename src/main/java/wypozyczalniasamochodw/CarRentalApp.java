@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
+
 /* SPRAWDZENIE CASOW:
 1. TEN SAM DZIEN DZIALA
 2. SAMOCHOD WYPOZYCZONY OD NP 5 DO 15 A CHCE WYPOZYCZYC OD 10 DO 15
@@ -15,22 +16,23 @@ import java.time.LocalDate;
 public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tutaj jest dobrze
 
     private final RentalService rentalService;
-
     private final RentalStorage rentalStorage;
+    private final CarStorage carStorage = new CarStorage();
 
-    public CarRentalApp(RentalService rentalService, RentalStorage rentalStorage){
+    public CarRentalApp(RentalService rentalService, RentalStorage rentalStorage) {
         this.rentalService = rentalService;
         this.rentalStorage = rentalStorage;
         rentalService.rentalMethod("Ferrari Roma",
-                LocalDate.now().plusDays(5),
-                LocalDate.now().plusDays(9),1);
+                LocalDate.of(2025, 1,1),
+                LocalDate.of(2025,1,30),2);
         rentalService.rentalMethod("Passat w gazie",
-                LocalDate.now(),
-                LocalDate.now().plusDays(1),2);
+                LocalDate.of(2025, 1,1),
+                LocalDate.of(2025,2,20), 2);
         rentalService.rentalMethod("Audi Q7",
-                LocalDate.now().plusDays(2),
-                LocalDate.now().plusDays(4),3);
+                LocalDate.of(2025, 1,3),
+                LocalDate.of(2025,2,1), 4);
         rentalStorage.printRentals();
+//        carStorage.getAllCars().forEach(System.out::println);
     }
 
     public static void main(String[] args) {

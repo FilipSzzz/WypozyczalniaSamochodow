@@ -14,7 +14,7 @@ public class RentalService {
         this.carStorage = carStorage;
     }
 
-    public void rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
+    public boolean rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
         if (!isAvailable(model, dateFrom, dateTo)) {
             System.out.println("Nie ma dostepnego modelu w podanym terminie");
         }
@@ -23,9 +23,10 @@ public class RentalService {
                 Rental rental = new Rental(dateFrom, dateTo, clientId, car.getVin());
                 rentalStorage.addRental(rental);
                 System.out.println("Wypozyczono samochod: " + model + " (VIN: " + car.getVin() + ")");
-                return;
+                return false;
             }
         }
+        return false;
     }
 
     public boolean isAvailable(String model, LocalDate dateFrom, LocalDate dateTo) {
@@ -38,7 +39,7 @@ public class RentalService {
     }
 
     public boolean isModelAvailableInDate(int vin, LocalDate dateFrom, LocalDate dateTo) {
-        if (!carStorage.getCarByVin(vin)) {
+        if (!carStorage.existByVin(vin)) {
             System.out.println("Nie ma takiego samochodu w bazie danych.");
             return false;
         }
@@ -54,12 +55,12 @@ public class RentalService {
             System.out.println("Nie mozna wypozyczyc samochodu na jeden dzien.");
             return false;
         }
-        for (Rental existingRental: rentalStorage.getRentals()) { // iterujemy po wszystkich wypozyczeniach, szukajac nalozenia sie
-            if (existingRental.getCarVin() == vin){ // jezeli odnajdziemy wypozyczenie na samochod zgodny z podanym VINem
+        for (Rental existingRental : rentalStorage.getRentals()) { // iterujemy po wszystkich wypozyczeniach, szukajac nalozenia sie
+            if (existingRental.getCarVin() == vin) { // jezeli odnajdziemy wypozyczenie na samochod zgodny z podanym VINem
                 LocalDate existingStart = existingRental.getOdData(); // zapisuje istniejace wypozyczenie
                 LocalDate existingEnd = existingRental.getDoData();
 
-                if (!dateTo.isBefore(existingStart) && !dateFrom.isAfter(existingEnd)){ // przypadek nalozenia sie
+                if (!dateTo.isBefore(existingStart) && !dateFrom.isAfter(existingEnd)) { // przypadek nalozenia sie
                     return false;
                 }
             }
