@@ -3,7 +3,7 @@ package wypozyczalniasamochodw;
 public class Car {
     private String model;
     private int vin;
-    public CarClass carClass;
+    private CarClass carClass;
 
     public Car(String model, CarClass carClass, int vin) {
         this.model = model;

@@ -10,16 +10,16 @@ import java.time.LocalDate;
 2. SAMOCHOD WYPOZYCZONY OD NP 5 DO 15 A CHCE WYPOZYCZYC OD 10 DO 15
 3. NAŁOŻENIE SIE DAT: OD 10 DO 14 WYPOZYCZONY KLIENT CHCE OD 10 DO 15
 4. WYPOZYCZENIE OD DZISIAJ DO ZA 4 DNI A WYPOZYCZENIE CHCE KLIENT ZA 1 DZIEN DO DNIA ZA 3 DNI
-5. NIE DA SIE WYPOZYCZYC SAMOCHODU TEGO SAMEGO DNIA DWA RAZY
+5. NIE DA SIE WYPOZYCZYC SAMOHODU TEGO SAMEGO DNIA DWA RAZY
 * */
 @SpringBootApplication
 public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tutaj jest dobrze
 
     private final RentalService rentalService;
     private final RentalStorage rentalStorage;
-    private final CarStorage carStorage = new CarStorage();
 
-    public CarRentalApp(RentalService rentalService, RentalStorage rentalStorage) {
+
+    public CarRentalApp(RentalService rentalService, RentalStorage rentalStorage, CarStorage carStorage) {
         this.rentalService = rentalService;
         this.rentalStorage = rentalStorage;
         rentalService.rentalMethod("Ferrari Roma",
@@ -32,7 +32,7 @@ public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tu
                 LocalDate.of(2025, 1,3),
                 LocalDate.of(2025,2,1), 4);
         rentalStorage.printRentals();
-//        carStorage.getAllCars().forEach(System.out::println);
+        carStorage.getAllCars().forEach(System.out::println);
     }
 
     public static void main(String[] args) {

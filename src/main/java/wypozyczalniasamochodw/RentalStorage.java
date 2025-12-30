@@ -20,7 +20,7 @@ public class RentalStorage {
         rentals.add(rental);
     }
     public ArrayList<Rental> getRentals() {
-        return rentals;
+        return new ArrayList<>(rentals);
     }
     public boolean existingRental(int vin){
         for (Rental rental : rentals) {

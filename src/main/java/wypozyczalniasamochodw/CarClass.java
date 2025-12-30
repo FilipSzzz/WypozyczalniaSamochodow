@@ -4,7 +4,7 @@ public enum CarClass {
     Premium,
     Standard,
     Economy,
-    Bussiness,
+    Business,
     SUV,
     Truck
 

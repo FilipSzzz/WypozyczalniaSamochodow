@@ -16,16 +16,18 @@ public class RentalService {
 
     public boolean rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
         if (!isAvailable(model, dateFrom, dateTo)) {
-            System.out.println("Nie ma dostepnego modelu w podanym terminie");
+            System.out.println("Żaden egzemplarz modelu" + model + " nie jest dostepny w podanym terminie");
+            return false;
         }
         for (Car car : carStorage.getCarByModel(model)) {
             if (isModelAvailableInDate(car.getVin(), dateFrom, dateTo)) {
                 Rental rental = new Rental(dateFrom, dateTo, clientId, car.getVin());
                 rentalStorage.addRental(rental);
                 System.out.println("Wypozyczono samochod: " + model + " (VIN: " + car.getVin() + ")");
-                return false;
+                return true;
             }
         }
+        System.out.println("Nie ma takiego samochodu lub nie ma wolnych miejsc.");
         return false;
     }
 
@@ -44,12 +46,10 @@ public class RentalService {
             return false;
         }
         if (dateFrom == null || dateTo == null) {
-            System.out.println("Podane dateFrom lub dateTo nie moze byc null.");
-            return false;
+            throw new IllegalArgumentException("Data nie moze byc null.");
         }
         if (dateFrom.isAfter(dateTo)) {
-            System.out.println("DataOd nie moze byc po DataDo lub po dniu dzisiejszym.");
-            return false;
+            throw new IllegalArgumentException("Data od nie moze byc po data do.");
         }
         if (dateFrom.isEqual(dateTo)) {
             System.out.println("Nie mozna wypozyczyc samochodu na jeden dzien.");
