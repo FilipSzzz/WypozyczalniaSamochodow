@@ -20,7 +20,8 @@ public class RentalServiceTest {
 
     }
     @Test
-    void shoudlReturnFalseBecauseOfLoopingDate_fromLeft() {
+    void shouldReturnFalseBecauseOfLoopingDate_fromLeft() {
 
     }
+
 }

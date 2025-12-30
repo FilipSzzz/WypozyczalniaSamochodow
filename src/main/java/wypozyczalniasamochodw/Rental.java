@@ -10,6 +10,9 @@ public class Rental {
     private int carVin;
 
     public Rental(LocalDate odData, LocalDate doData, int klientId, int carVin) {
+        if(doData.isBefore(odData)){
+            throw new IllegalArgumentException("Data oddania nie moze byc wczeniej niz data wypozyczenia");
+        }
         this.odData = odData;
         this.doData = doData;
         this.klientId = klientId;

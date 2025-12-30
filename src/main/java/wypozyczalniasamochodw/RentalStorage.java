@@ -8,7 +8,7 @@ import java.util.List;
 
 @Component
 public class RentalStorage {
-    private ArrayList<Rental> rentals = new ArrayList<>();
+    private final ArrayList<Rental> rentals = new ArrayList<>();
 
     public RentalStorage() {
         rentals.add(new Rental(LocalDate.of(2025,2,20), LocalDate.of(2025,3,10), 2, 5555));
@@ -21,6 +21,14 @@ public class RentalStorage {
     }
     public ArrayList<Rental> getRentals() {
         return rentals;
+    }
+    public boolean existingRental(int vin){
+        for (Rental rental : rentals) {
+            if (rental.getCarVin() == vin) {
+                return true;
+            }
+        }
+        return false;
     }
     public void printRentals(){
         for (Rental rental : rentals) {

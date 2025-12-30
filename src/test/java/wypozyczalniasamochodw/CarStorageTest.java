@@ -36,7 +36,21 @@ public class CarStorageTest {
     }
     @Test
     void checkIfCarDoesntExistByCar(){
-
+         Car car = new Car("Ferrari Roma", CarClass.Premium, 9999);
+         carStorage.addCar(car);
+         assertTrue(carStorage.existByVin(car.getVin()));
     }
+//    @Test
+//    void checkIfCarExistByModel(){
+//        Car car = new Car("Ferrari Roma", CarClass.Premium, 2222);
+//        carStorage.getCarByModel(car.getModel());
+//        assertThat(carStorage.existByVin(car.getVin()));
+//    }
+//    @Test
+//    void checkIfCarDoesntExistByModel(){
+//        Car car = new Car("Ferrari Roma", CarClass.Premium, 9999);
+//        carStorage.getCarByModel(car.getModel());
+//        assertFalse(carStorage.existByVin(car.getVin()));
+//    }
 
 }

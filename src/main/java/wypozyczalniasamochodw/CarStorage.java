@@ -53,6 +53,7 @@ public class CarStorage {
             return;
         }
         cars.add(car);
+        System.out.println("Dodano nowy samochod do bazy danych.");
     }
 
     public List<Car> getCarByModel(String model) { // trzeba to robic bo moga byc np DWA PASSATY
