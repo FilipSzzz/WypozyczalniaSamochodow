@@ -16,7 +16,7 @@ public class RentalService {
 
     public boolean rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
         if (!isAvailable(model, dateFrom, dateTo)) {
-            System.out.println("Żaden egzemplarz modelu" + model + " nie jest dostepny w podanym terminie");
+            System.out.println("Żaden egzemplarz modelu " + model + " nie jest dostepny w podanym terminie");
             return false;
         }
         for (Car car : carStorage.getCarByModel(model)) {

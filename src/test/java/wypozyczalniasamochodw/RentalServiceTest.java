@@ -54,5 +54,32 @@ public class RentalServiceTest {
         rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,1), LocalDate.of(2025,1,20),2);
         assertFalse(rentalService.isModelAvailableInDate(2222, LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 20)));
     }
+    @Test
+    void isModelAvailableInDateWithOverlappingDate_fromRight(){
+        rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,1), LocalDate.of(2025,1,30),2);
+        rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,20), LocalDate.of(2025,2,1),2);
+        assertFalse(rentalService.isModelAvailableInDate(2222, LocalDate.of(2025, 1,20), LocalDate.of(2025,2,1)));
+    }
+    @Test
+    void overlappingTheWholeDate(){
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 2,1), LocalDate.of(2025,2,20),2);
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 1,1), LocalDate.of(2025,3,20),2);
+        assertFalse(rentalService.isModelAvailableInDate(7777, LocalDate.of(2025, 1,1), LocalDate.of(2025,3,20)));
+
+    }
+    @Test
+    void checkingThreeOverlappingRentals(){
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 2,1), LocalDate.of(2025,3,20),2);
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 3,1), LocalDate.of(2025,3,2),2);
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 3,10), LocalDate.of(2025,3,21),2);
+        assertFalse(rentalService.isModelAvailableInDate(7777, LocalDate.of(2025, 3,1), LocalDate.of(2025,3,2)));
+        assertFalse(rentalService.isModelAvailableInDate(7777, LocalDate.of(2025, 3,10), LocalDate.of(2025,3,21)));
+    }
+    @Test
+    void checkingIfRentalCanBeTakeByOtherClient(){
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 2,1), LocalDate.of(2025,3,20),2);
+        rentalService.rentalMethod("Audi Q7", LocalDate.of(2025, 3,1), LocalDate.of(2025,3,2),4);
+        assertFalse(rentalService.isModelAvailableInDate(7777, LocalDate.of(2025, 3,1), LocalDate.of(2025,3,2)));
+    }
 
 }
