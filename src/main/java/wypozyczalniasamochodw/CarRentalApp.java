@@ -31,7 +31,7 @@ public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tu
         rentalService.rentalMethod("Audi Q7",
                 LocalDate.of(2025, 1,3),
                 LocalDate.of(2025,2,1), 4);
-        rentalStorage.printRentals();
+        rentalStorage.getRentals().forEach(System.out::println);
         carStorage.getAllCars().forEach(System.out::println);
     }
 
