@@ -8,14 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CarStorageTest {
-    final CarStorage carStorage = new CarStorage();
+    CarStorage carStorage = new CarStorage();
     @BeforeEach
     void setUp() {
-        CarStorageTest carStorage = new CarStorageTest();
+        this.carStorage = new CarStorage();
     }
-
-    // TESTUJE ZAWSZE HAPPY I SAD CASE, COS CO MA DZIALAC, I NIE DZIALAC
-
     @Test
     void checkingIfCarExistByVIN(){
         Car car = new Car("Ferrari Roma Czerwona", CarClass.Premium, 2543);
@@ -39,6 +36,25 @@ public class CarStorageTest {
          Car car = new Car("Ferrari Roma", CarClass.Premium, 9999);
          carStorage.addCar(car);
          assertTrue(carStorage.existByVin(car.getVin()));
+    }
+    @Test
+    void checkingNumberOfCars(){
+        int initialSize = carStorage.getAllCars().size();
+        Car car = new Car("Laferrari", CarClass.Premium, 6767);
+        carStorage.addCar(car);
+        assertThat(carStorage.getAllCars().size()).isEqualTo(initialSize + 1);
+    }
+    @Test
+    void checkingIfExistingCarCanBeAdded(){
+        Car car = new Car("Ferrari Roma", CarClass.Premium, 2222);
+        carStorage.addCar(car);
+        assertThat(carStorage.getCarByModel("Ferrari Roma"));
+    }
+    @Test
+    void checkingIfNonExistingCarCanBeAdded(){
+        Car car = new Car("Opel Corsa",CarClass.Economy,4912);
+        carStorage.addCar(car);
+        assertThat(carStorage.getCarByModel("Opel Corsa"));
     }
 //    @Test
 //    void checkIfCarExistByModel(){

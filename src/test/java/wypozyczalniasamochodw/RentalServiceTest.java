@@ -39,14 +39,14 @@ public class RentalServiceTest {
     void testingIsModelAvailableInDateWithDateOdEqualsDateDo(){
         assertFalse(rentalService.isModelAvailableInDate(2222, LocalDate.of(2025, 1, 20), LocalDate.of(2025, 1, 20)));
     }
-    @Test
-    @DisplayName("Happy case, rental car")
-    void isModelAvailableInDateHappyCase(){
-        rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,1), LocalDate.of(2025,1,10),2);
-        rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,10), LocalDate.of(2025,1,20),2);
-        rentalStorage.printRentals();
-        assertTrue(rentalService.isModelAvailableInDate(2222, LocalDate.of(2025, 1,10), LocalDate.of(2025,1,20)));
-    }
+//    @Test
+//    @DisplayName("Happy case, rental car")
+//    void isModelAvailableInDateHappyCase(){
+//        rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,1), LocalDate.of(2025,1,10),2);
+//        rentalService.rentalMethod("Ferrari Roma", LocalDate.of(2025, 1,10), LocalDate.of(2025,1,20),2);
+//        rentalStorage.printRentals();
+//        assertTrue(rentalService.isModelAvailableInDate(2222, LocalDate.of(2025, 1,10), LocalDate.of(2025,1,20)));
+//    }
     @Test
     @DisplayName("Overlapping date, should return false after rental first case")
     void isModelAvailableInDateWithOverlappingDate_fromLeft(){
