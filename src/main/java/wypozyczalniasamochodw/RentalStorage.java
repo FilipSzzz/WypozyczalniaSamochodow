@@ -19,7 +19,7 @@ public class RentalStorage {
     public void addRental(Rental rental) {
         rentals.add(rental);
     }
-    public ArrayList<Rental> getRentals() {
+    public List<Rental> getRentals() {
         return new ArrayList<>(rentals);
     }
     public boolean existingRental(int vin){
