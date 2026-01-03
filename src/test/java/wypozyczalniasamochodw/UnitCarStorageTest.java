@@ -1,7 +1,6 @@
 package wypozyczalniasamochodw;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -24,7 +23,7 @@ public class UnitCarStorageTest {
     private RentalService rentalService;
 
     @Test
-    void contextLoads() {
+    void shouldReturnFalseWhenCarIsAlreadyRentedInGivenPeriod() {
         List<Car> cars = new ArrayList<>();
         cars.add(new Car("Ferrari Roma", CarClass.Premium, 2543));
         cars.add(new Car("Audi Q7", CarClass.SUV, 7777));
@@ -32,16 +31,20 @@ public class UnitCarStorageTest {
         List<Rental> rentals = new ArrayList<>();
         rentals.add(new Rental(LocalDate.of(2025,1,1),
                 LocalDate.of(2025,1,2),1,2543));
-
+        rentals.add(new Rental(LocalDate.of(2025,1,1),
+                LocalDate.of(2025,1,2),2,7777));
         when(carStorage.getAllCars()).thenReturn(cars);
         when(carStorage.existByVin(2543)).thenReturn(true);
+        when(carStorage.existByVin(7777)).thenReturn(true);
         when(rentalStorage.getRentals()).thenReturn(rentals);
 
-        boolean result = rentalService.isModelAvailableInDate(2543,LocalDate.of(2025,1,1),
+        boolean resultOfFirstCar = rentalService.isModelAvailableInDate(2543,LocalDate.of(2025,1,1),
                 LocalDate.of(2025,1,2));
-
-
-
+        boolean resultOfSecondCar = rentalService.isModelAvailableInDate(7777,LocalDate.of(2025,1,1),
+                LocalDate.of(2025,1,2));
+        rentals.forEach(System.out::println);
+        assertFalse(resultOfFirstCar);
+        assertFalse(resultOfSecondCar);
     }
 
 }
