@@ -22,15 +22,15 @@ public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tu
     public CarRentalApp(RentalService rentalService, RentalStorage rentalStorage, CarStorage carStorage) {
         this.rentalService = rentalService;
         this.rentalStorage = rentalStorage;
-//        rentalService.rentalMethod("Ferrari Roma",
-//                LocalDate.of(2025, 1,1),
-//                LocalDate.of(2025,1,30),2);
-//        rentalService.rentalMethod("Passat w gazie",
-//                LocalDate.of(2025, 1,1),
-//                LocalDate.of(2025,2,20), 2);
-//        rentalService.rentalMethod("Audi Q7",
-//                LocalDate.of(2025, 1,3),
-//                LocalDate.of(2025,2,1), 4);
+        rentalService.rental("Ferrari Roma",
+                LocalDate.of(2026, 1,1),
+                LocalDate.of(2026,1,30),2);
+        rentalService.rental("Passat w gazie",
+                LocalDate.of(2026, 1,1),
+                LocalDate.of(2026,2,20), 2);
+        rentalService.rental("Audi Q7",
+                LocalDate.of(2026, 1,3),
+                LocalDate.of(2026,2,1), 4);
 //        rentalStorage.getRentals().forEach(System.out::println);
 //        carStorage.getAllCars().forEach(System.out::println);
     }

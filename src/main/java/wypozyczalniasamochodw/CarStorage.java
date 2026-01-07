@@ -25,8 +25,9 @@ public class CarStorage {
         cars.add(new Car("BMW M4 CS", CarClass.Standard, 5555));
         cars.add(new Car("Mercedes S CLASS", CarClass.Business, 6666));
         cars.add(new Car("Audi Q7", CarClass.SUV, 7777));
+
     }
-    public boolean existByVin(int vin) { // TUTAJ JEST CHYBA ZAIMPLEMENTOWANE DOBRZE, BO SAMOCHOD PO VINIE JEST UNIKALNY
+    public boolean existByVin(int vin) {
         for (Car car : cars) {
             if (car.getVin() == vin) {
                 return true;
@@ -34,21 +35,11 @@ public class CarStorage {
         }
         return false;
     }
-    public Car getCarByVin(int vin) {
-        for (Car car : cars) {
-            if (car.getVin() == vin) {
-                return car;
-            }
-        }
-        return null;
-    }
     public void addCar(Car car) {
         if (existByVin(car.getVin())) {
-            System.out.println("Samochod o podanym VIN juz istnieje w bazie danych.");
             return;
         }
         cars.add(car);
-        System.out.println("Dodano nowy samochod do bazy danych.");
     }
 
     public List<Car> getAllCars() {

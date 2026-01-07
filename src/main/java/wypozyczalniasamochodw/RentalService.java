@@ -14,7 +14,7 @@ public class RentalService {
         this.carStorage = carStorage;
     }
 
-    public boolean rentalMethod(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
+    public boolean rental(String model, LocalDate dateFrom, LocalDate dateTo, int clientId) {
         if (!isAvailable(model, dateFrom, dateTo)) {
             System.out.println("Żaden egzemplarz modelu " + model + " nie jest dostepny w podanym terminie");
             return false;
@@ -27,7 +27,7 @@ public class RentalService {
                 return true;
             }
         }
-        System.out.println("Nie ma takiego samochodu lub nie ma wolnych miejsc.");
+        System.out.println("Nie udalo sie zrealizowac wypozyczenia.");
         return false;
     }
 
@@ -41,13 +41,20 @@ public class RentalService {
     }
 
     public boolean isModelAvailableInDate(int vin, LocalDate dateFrom, LocalDate dateTo) {
+        if (dateFrom == null || dateTo == null) {
+            throw new IllegalArgumentException("Data nie moze byc null.");
+        }
+        
         if (!carStorage.existByVin(vin)) {
             System.out.println("Nie ma takiego samochodu w bazie danych.");
             return false;
         }
-        if (dateFrom == null || dateTo == null) {
-            throw new IllegalArgumentException("Data nie moze byc null.");
+
+        if (dateFrom.isBefore(LocalDate.now()) || dateTo.isBefore(LocalDate.now())) {
+            System.out.println("Nie mozna wypozyczac z data wsteczna.");
+            return false;
         }
+
         if (dateFrom.isAfter(dateTo)) {
             throw new IllegalArgumentException("Data od nie moze byc po data do.");
         }

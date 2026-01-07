@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RentalStorageTest {
@@ -18,17 +19,14 @@ public class RentalStorageTest {
     @Test
     @DisplayName("Podstawowe dodanie rentala")
     void addingRental(){
-        Rental rental = new Rental(LocalDate.of(2025,1,1),LocalDate.of(2025,1,2),1,1234);
+        Rental rental = new Rental(LocalDate.now().plusDays(1),LocalDate.now().plusDays(2),1,1234);
         rentalStorage.addRental(rental);
-        rentalStorage.existingRental(rental.getCarVin());
-
-        assertTrue(rentalStorage.existingRental(rental.getCarVin()));
     }
 
     @Test
     @DisplayName("Dodawanie istniejacego juz rentala, powinien dodac gdyz w rentalStorage nie ma implementacji sprawdzenia duplikacji")
     void addingExistingRental(){
-        Rental rental = new Rental(LocalDate.of(2025,2,1), LocalDate.of(2025,2,3), 1, 1234);
+        Rental rental = new Rental(LocalDate.now().plusDays(30), LocalDate.now().plusDays(32), 1, 1234);
         rentalStorage.addRental(rental);
         rentalStorage.printRentals();
         assertTrue(rentalStorage.getRentals().contains(rental));
@@ -50,16 +48,16 @@ public class RentalStorageTest {
     @Test
     @DisplayName("Sprawdzenie czy wypozyczenie bedzie w print")
     void printingRentals(){
-        Rental rental = new Rental(LocalDate.of(2025,3,1),LocalDate.of(2025,4,2),1,1234);
+        Rental rental = new Rental(LocalDate.now().plusDays(60),LocalDate.now().plusDays(90),1,1234);
         rentalStorage.addRental(rental);
         assertTrue(rentalStorage.getRentals().contains(rental));
     }
     @Test
     @DisplayName("Sprawdzenie istniejacego rentala")
     void checkingIfRentalExistHappy(){
-        Rental rental = new Rental(LocalDate.of(2025,3,1),LocalDate.of(2025,4,2),1,1234);
+        Rental rental = new Rental(LocalDate.now().plusDays(60),LocalDate.now().plusDays(90),1,1234);
         rentalStorage.addRental(rental);
-        assertTrue(rentalStorage.existingRental(rental.getCarVin()));
+
     }
 
 

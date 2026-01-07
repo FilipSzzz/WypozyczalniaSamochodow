@@ -1,6 +1,7 @@
 package wypozyczalniasamochodw;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -56,17 +57,25 @@ public class CarStorageTest {
         carStorage.addCar(car);
         assertThat(carStorage.getCarByModel("Opel Corsa"));
     }
-//    @Test
-//    void checkIfCarExistByModel(){
-//        Car car = new Car("Ferrari Roma", CarClass.Premium, 2222);
-//        carStorage.getCarByModel(car.getModel());
-//        assertThat(carStorage.existByVin(car.getVin()));
-//    }
-//    @Test
-//    void checkIfCarDoesntExistByModel(){
-//        Car car = new Car("Ferrari Roma", CarClass.Premium, 9999);
-//        carStorage.getCarByModel(car.getModel());
-//        assertFalse(carStorage.existByVin(car.getVin()));
-//    }
+    @Test
+    @DisplayName("Sprawdzenie czy mozna z malych liter ")
+    void checkIfCarExistByModel(){
+        Car car = new Car("ferrari roma", CarClass.Premium, 2222);
+        carStorage.getCarByModel(car.getModel());
+        assertThat(carStorage.existByVin(car.getVin()));
+    }
+    @Test
+    void checkIfCarDoesntExistByModel(){
+        Car car = new Car("Ferrari Roma", CarClass.Premium, 9999);
+        carStorage.getCarByModel(car.getModel());
+        assertFalse(carStorage.existByVin(car.getVin()));
+    }
+    @Test
+    @DisplayName("Sprawdzenie czy mozna dodac auto z tym samym vinem")
+    void checkIfCarCanBeAddedTwice(){
+        Car car = new Car("Ferrari Roma", CarClass.Premium, 2222);
+        carStorage.addCar(car);
+        assertThat(carStorage.getCarByModel("Ferrari Roma")).isNotNull();
+    }
 
 }
