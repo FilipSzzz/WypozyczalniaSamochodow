@@ -42,9 +42,13 @@ public class RentalService {
 
     public boolean isModelAvailableInDate(int vin, LocalDate dateFrom, LocalDate dateTo) {
         if (dateFrom == null || dateTo == null) {
-            throw new IllegalArgumentException("Data nie moze byc null.");
+            System.out.println("Data nie moze byc null.");
+            return false;
         }
-        
+        if (dateFrom.isAfter(dateTo)) {
+            System.out.println("Data od nie moze byc po data do.");
+            return false;
+        }
         if (!carStorage.existByVin(vin)) {
             System.out.println("Nie ma takiego samochodu w bazie danych.");
             return false;
@@ -55,9 +59,6 @@ public class RentalService {
             return false;
         }
 
-        if (dateFrom.isAfter(dateTo)) {
-            throw new IllegalArgumentException("Data od nie moze byc po data do.");
-        }
         if (dateFrom.isEqual(dateTo)) {
             System.out.println("Nie mozna wypozyczyc samochodu na jeden dzien.");
             return false;

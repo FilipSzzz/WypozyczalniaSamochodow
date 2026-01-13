@@ -15,22 +15,17 @@ import java.time.LocalDate;
 @SpringBootApplication
 public class CarRentalApp { // glowna klasa sluzaca jako odpalenie aplikacji, tutaj jest dobrze
 
-    private final RentalService rentalService;
-    private final RentalStorage rentalStorage;
-
 
     public CarRentalApp(RentalService rentalService, RentalStorage rentalStorage, CarStorage carStorage) {
-        this.rentalService = rentalService;
-        this.rentalStorage = rentalStorage;
         rentalService.rental("Ferrari Roma",
-                LocalDate.of(2026, 1,1),
-                LocalDate.of(2026,1,30),2);
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(20), 1);
         rentalService.rental("Passat w gazie",
-                LocalDate.of(2026, 1,1),
-                LocalDate.of(2026,2,20), 2);
+                LocalDate.now().plusDays(4),
+                LocalDate.now().plusDays(10),2);
         rentalService.rental("Audi Q7",
-                LocalDate.of(2026, 1,3),
-                LocalDate.of(2026,2,1), 4);
+                LocalDate.now().plusDays(20),
+                LocalDate.now().plusDays(40),4);
 //        rentalStorage.getRentals().forEach(System.out::println);
 //        carStorage.getAllCars().forEach(System.out::println);
     }
